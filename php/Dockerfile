@@ -12,14 +12,7 @@ RUN apk add libpng libpng-dev libjpeg-turbo-dev libwebp-dev zlib-dev libxpm-dev 
 # Install MySql
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    ln -s /root/.composer/vendor/bin/drush /usr/local/bin/drush
 
-# Install Drush
-RUN composer global require drush/drush && \
-    composer global update 
 
 # PHP packages
 RUN apk add --update \
@@ -88,3 +81,11 @@ RUN apk add --update \
 
 # Copy php.ini memory limit increase    
 COPY php.ini /usr/local/etc/php/
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer && \
+    ln -s /root/.composer/vendor/bin/drush /usr/local/bin/drush
+
+# Install Drush
+RUN composer global require drush/drush && \
+    composer global update 
